@@ -8,10 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The test suite for testing the SimpleBankAccount implementation
  */
-class SimpleBankAccountTest {
-
-    private AccountHolder accountHolder;
-    private BankAccount bankAccount;
+class SimpleBankAccountTest extends BaseBankAccountTest {
 
     @BeforeEach
     void beforeEach(){
@@ -21,33 +18,26 @@ class SimpleBankAccountTest {
 
     @Test
     void testInitialBalance() {
-        assertEquals(0, bankAccount.getBalance());
+        checkBalance(0);
     }
 
     @Test
     void testDeposit() {
-        bankAccount.deposit(accountHolder.getId(), 100);
-        assertEquals(100, bankAccount.getBalance());
+        checkDeposit(100, 100);
     }
 
     @Test
     void testWrongDeposit() {
-        bankAccount.deposit(accountHolder.getId(), 100);
-        bankAccount.deposit(2, 50);
-        assertEquals(100, bankAccount.getBalance());
+        checkWrongDeposit(100, 100);
     }
 
     @Test
     void testWithdraw() {
-        bankAccount.deposit(accountHolder.getId(), 100);
-        bankAccount.withdraw(accountHolder.getId(), 70);
-        assertEquals(30, bankAccount.getBalance());
+        checkWithdrawAfterDeposit(100, 70, 30);
     }
 
     @Test
     void testWrongWithdraw() {
-        bankAccount.deposit(accountHolder.getId(), 100);
-        bankAccount.withdraw(2, 70);
-        assertEquals(100, bankAccount.getBalance());
+        checkWrongWithdrawAfterDeposit(100, 70, 100);
     }
 }
